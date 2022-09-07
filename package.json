@@ -1,0 +1,30 @@
+{
+  "name": "turborepo-basic-shared",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev  --no-cache --parallel --continue",
+    "export": "turbo run export  --no-cache --parallel --continue",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "lint": "turbo run lint",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "prettier": "latest",
+    "turbo": "latest"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "packageManager": "yarn@1.22.17",
+  "dependencies": {
+    "next": "^12.1.6",
+    "next-transpile-modules": "^9.0.0"
+  }
+}

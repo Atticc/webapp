@@ -1,0 +1,47 @@
+# ci pipeline for deploying onboarding portal
+# image: node:alpine
+# image: amazon/aws-cli
+image: timbru31/node-alpine-git:16
+# And to cache them as well.
+cache:
+  paths:
+    - node_modules/
+    - .yarn
+
+stages:
+  - build
+  - deploy
+
+Build-Dev:
+  environment: development
+  stage: build
+  only:
+    refs:
+      - main
+  before_script:
+    - yarn config set cache-folder .yarn
+    - yarn install
+  script:
+    - yarn build
+    - yarn export
+  artifacts:
+    paths:
+      - apps/web/out/
+    expire_in: 1 hour
+
+Deploy-Dev:
+  environment: development
+  image:
+    name: amazon/aws-cli
+    entrypoint: ['']
+  stage: deploy
+  variables:
+    S3_BUCKET_NAME: atticc.xyz
+    DISTRIBUTION_ID: E2RL5NO1KF6WSS
+  only:
+    refs:
+      - main
+  script:
+    - aws s3 cp apps/web/out s3://${S3_BUCKET_NAME}/main --recursive --quiet
+    - aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID} --paths "/*"
+    - echo "https://atticc.xyz"
