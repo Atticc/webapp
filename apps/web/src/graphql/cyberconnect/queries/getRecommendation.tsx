@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import { CYBERCONNECT_ENDPOINT } from '../../../app/config'
 import { IUser } from '../../../app/constants'
 
+// get recommendattions from local GraphQL engine
 export const getRecommendations = async (address: string) => {
   try {
     const { recommendations } = await request(
