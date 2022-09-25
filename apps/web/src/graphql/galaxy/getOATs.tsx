@@ -6,6 +6,7 @@ export interface GetOATsRequest {
   address: string
 }
 
+// introduce galaxy oat api
 export const GET_GALAXY_OAT = gql`
   query getOATs($address: String!) {
     addressInfo(address: $address) {

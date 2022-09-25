@@ -2,6 +2,7 @@ import { Grid, Typography, useTheme } from '@mui/material'
 import Link from 'next/link'
 import { ICommunity } from '../app/constants'
 
+// comminity card to show details of community page
 export const CommunityCard = ({ community }: { community: ICommunity }) => {
   const colorTheme = useTheme().palette
 
